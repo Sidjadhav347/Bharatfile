@@ -26,32 +26,63 @@ export function Header() {
           </div>
 
           <nav className="hidden lg:flex items-center gap-6 text-xs font-semibold text-neutral-800">
-            <span className="relative py-3.5 font-bold text-neutral-900 border-b-2 border-neutral-950 cursor-pointer">
+            <button
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="relative py-3.5 font-bold text-neutral-900 border-b-2 border-neutral-950 cursor-pointer"
+            >
               {t('app.name')}
-            </span>
-            <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors">
+            </button>
+            <button
+              type="button"
+              onClick={() => document.getElementById('upload-section')?.scrollIntoView({ behavior: 'smooth' })}
+              className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors"
+            >
               Features
-            </span>
-            <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors">
+            </button>
+            <button
+              type="button"
+              onClick={() => document.getElementById('privacy-section')?.scrollIntoView({ behavior: 'smooth' })}
+              className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors"
+            >
               Privacy Standard
-            </span>
-            <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors">
+            </button>
+            <button
+              type="button"
+              onClick={() => document.getElementById('summary-section')?.scrollIntoView({ behavior: 'smooth' })}
+              className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors"
+            >
               Security & Luhn
-            </span>
-            <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors">
+            </button>
+            <button
+              type="button"
+              onClick={() => document.getElementById('comparison-section')?.scrollIntoView({ behavior: 'smooth' })}
+              className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors"
+            >
               Verification
-            </span>
+            </button>
           </nav>
         </div>
 
         {/* Right: Adobe-style pill CTA & Language Switcher */}
         <div className="flex items-center gap-3">
-          <div className="hidden sm:flex items-center gap-1.5 text-xs text-neutral-500 font-medium">
+          <button
+            type="button"
+            onClick={() => document.getElementById('privacy-section')?.scrollIntoView({ behavior: 'smooth' })}
+            className="hidden sm:flex items-center gap-1.5 text-xs text-neutral-600 font-medium hover:text-neutral-900 cursor-pointer transition-colors"
+          >
             <ShieldCheck className="h-4 w-4 text-emerald-600" />
             <span>100% Client-Side</span>
-          </div>
+          </button>
 
-          <LayoutGrid className="hidden sm:block h-4 w-4 text-neutral-400" />
+          <button
+            type="button"
+            onClick={() => document.getElementById('summary-section')?.scrollIntoView({ behavior: 'smooth' })}
+            className="hidden sm:block text-neutral-400 hover:text-neutral-700 cursor-pointer transition-colors"
+            aria-label="Toggle grid layout"
+          >
+            <LayoutGrid className="h-4 w-4" />
+          </button>
 
           {/* Language Switcher Styled like Adobe's Sign in / Locale button */}
           <div
@@ -93,11 +124,21 @@ export function Header() {
       {/* Sub-bar breadcrumbs matching Adobe's "Home | Adobe Creative Cloud" */}
       <div className="border-t border-neutral-100 bg-neutral-50/70 px-4 py-1.5 text-[11px] text-neutral-500 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl items-center gap-2">
-          <span className="hover:text-neutral-900 cursor-pointer">Home</span>
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="hover:text-neutral-900 cursor-pointer transition-colors"
+          >
+            Home
+          </button>
           <span className="text-neutral-300">|</span>
-          <span className="font-semibold text-neutral-800">
+          <button
+            type="button"
+            onClick={() => document.getElementById('upload-section')?.scrollIntoView({ behavior: 'smooth' })}
+            className="font-semibold text-neutral-800 hover:text-neutral-950 cursor-pointer transition-colors"
+          >
             {t('app.name')} — Client-Side PII Redactor
-          </span>
+          </button>
         </div>
       </div>
     </header>

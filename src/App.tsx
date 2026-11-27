@@ -322,7 +322,7 @@ export function App() {
 
       <main className="mx-auto w-full max-w-6xl flex-1 space-y-8 px-4 py-8 sm:px-6 lg:px-8">
         {/* Adobe-style Centered Hero Section */}
-        <section aria-label="Hero Section" className="flex flex-col items-center text-center space-y-4 pt-4 sm:pt-6">
+        <section id="privacy-section" aria-label="Hero Section" className="flex flex-col items-center text-center space-y-4 pt-4 sm:pt-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-100 px-3.5 py-1 text-xs font-semibold text-neutral-800">
             <ShieldCheck className="h-4 w-4 text-emerald-600" />
             <span>6 PII categories protected. 100% on your device.</span>
@@ -354,20 +354,22 @@ export function App() {
         />
 
         {/* Document Input Section */}
-        <DocumentInputSection
-          loadedDoc={loadedDoc}
-          errorMsg={errorMsg}
-          onLoadFile={handleLoadFile}
-          onLoadPastedText={handleLoadPastedText}
-          onLoadSample={handleLoadSample}
-          onResetSample={handleResetSample}
-          onRemoveDocument={handleRemoveDocument}
-          onSetError={setErrorMsg}
-        />
+        <div id="upload-section">
+          <DocumentInputSection
+            loadedDoc={loadedDoc}
+            errorMsg={errorMsg}
+            onLoadFile={handleLoadFile}
+            onLoadPastedText={handleLoadPastedText}
+            onLoadSample={handleLoadSample}
+            onResetSample={handleResetSample}
+            onRemoveDocument={handleRemoveDocument}
+            onSetError={setErrorMsg}
+          />
+        </div>
 
         {/* Detection Summary & Redaction Mode Selection */}
         {analysis && (
-          <div className="space-y-6">
+          <div id="summary-section" className="space-y-6">
             <DetectionSummarySection
               analysis={analysis}
               enabledCategories={enabledCategories}
@@ -384,14 +386,16 @@ export function App() {
         )}
 
         {/* Side-by-Side Comparison Workspace */}
-        <ComparisonWorkspace
-          analysis={analysis}
-          enabledCategories={enabledCategories}
-          isScanning={isScanning}
-        />
+        <div id="comparison-section">
+          <ComparisonWorkspace
+            analysis={analysis}
+            enabledCategories={enabledCategories}
+            isScanning={isScanning}
+          />
+        </div>
 
         {/* Download Section & Processing Log */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div id="download-section" className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <DownloadSection
             analysis={analysis}
             loadedDoc={loadedDoc}

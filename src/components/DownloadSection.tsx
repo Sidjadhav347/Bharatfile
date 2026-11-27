@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import type { DocumentAnalysis } from '../engine';
 import type { LoadedDocumentMeta } from './DocumentInputSection';
+import { cn } from '../lib/utils';
 import { Button } from './ui/button';
 import {
   Card,
@@ -44,7 +45,10 @@ export function DownloadSection({
   const [copied, setCopied] = React.useState(false);
 
   const handleDownload = () => {
-    if (!analysis || !loadedDoc) return;
+    if (!analysis || !loadedDoc) {
+      document.getElementById('upload-section')?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
 
     const mimeType =
       analysis.format === 'csv'
@@ -76,7 +80,11 @@ export function DownloadSection({
   };
 
   const handleCopy = async () => {
-    if (!analysis || !navigator.clipboard?.writeText) return;
+    if (!analysis) {
+      document.getElementById('upload-section')?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    if (!navigator.clipboard?.writeText) return;
     try {
       await navigator.clipboard.writeText(analysis.sanitizedText);
       setCopied(true);
@@ -98,9 +106,11 @@ export function DownloadSection({
         <div className="flex flex-wrap items-center gap-3">
           <Button
             size="lg"
-            disabled={!analysis}
             onClick={handleDownload}
-            className="w-full sm:w-auto bg-neutral-900 text-white hover:bg-neutral-800"
+            className={cn(
+              "w-full sm:w-auto bg-neutral-900 text-white hover:bg-neutral-800",
+              !analysis && "opacity-80"
+            )}
           >
             <Download className="h-4 w-4" aria-hidden="true" />
             {t('download.downloadButton', { format: formatUpper })}
@@ -109,9 +119,8 @@ export function DownloadSection({
           <Button
             variant="outline"
             size="lg"
-            disabled={!analysis}
             onClick={handleCopy}
-            className="w-full sm:w-auto"
+            className={cn("w-full sm:w-auto", !analysis && "opacity-80")}
           >
             {copied ? (
               <>

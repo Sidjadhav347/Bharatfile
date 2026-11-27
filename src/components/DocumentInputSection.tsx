@@ -64,7 +64,7 @@ export function DocumentInputSection({
     onLoadFile(file);
   };
 
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
     setIsDragging(false);
     const file = e.dataTransfer.files?.[0];
@@ -237,9 +237,10 @@ export function DocumentInputSection({
         {/* Hidden native file input */}
         <input
           ref={fileInputRef}
+          id="native-file-upload-input"
           type="file"
           accept=".txt,.csv,text/plain,text/csv"
-          className="sr-only"
+          className="hidden"
           aria-label={t('upload.chooseFile')}
           onChange={(e) => {
             const file = e.target.files?.[0];
@@ -249,24 +250,16 @@ export function DocumentInputSection({
         />
 
         {activeTab === 'file' ? (
-          <div
+          <label
+            htmlFor="native-file-upload-input"
             onDragOver={(e) => {
               e.preventDefault();
               setIsDragging(true);
             }}
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
-            onClick={triggerFilePicker}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                triggerFilePicker();
-              }
-            }}
             className={cn(
-              'group flex flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-10 text-center transition-all cursor-pointer',
+              'group flex flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-10 text-center transition-all cursor-pointer select-none',
               isDragging
                 ? 'border-neutral-900 bg-neutral-100/80 scale-[0.99]'
                 : 'border-neutral-200 bg-neutral-50/70 hover:border-neutral-400 hover:bg-neutral-100/50'
@@ -296,7 +289,7 @@ export function DocumentInputSection({
                 {t('upload.supportedFormats')}
               </span>
             </div>
-          </div>
+          </label>
         ) : (
           <div className="space-y-3">
             <div className="flex flex-wrap items-center justify-between gap-2">

@@ -202,8 +202,17 @@ export function DetectionSummarySection({
               return (
                 <div
                   key={category}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => onToggleCategory(category, !isEnabled)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onToggleCategory(category, !isEnabled);
+                    }
+                  }}
                   className={cn(
-                    'group relative flex flex-col justify-between rounded-2xl border p-5 transition-all shadow-2xs hover:shadow-xs',
+                    'group relative flex flex-col justify-between rounded-2xl border p-5 transition-all shadow-2xs hover:shadow-xs cursor-pointer select-none active:scale-[0.99]',
                     meta.bgCard,
                     !isEnabled && 'opacity-60 grayscale-[30%]'
                   )}
@@ -218,15 +227,17 @@ export function DetectionSummarySection({
                       </span>
                     </div>
 
-                    <Switch
-                      checked={isEnabled}
-                      onCheckedChange={(checked) =>
-                        onToggleCategory(category, checked)
-                      }
-                      ariaLabel={t('summary.toggleCategoryAria', {
-                        category: t(`categories.${category}`),
-                      })}
-                    />
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <Switch
+                        checked={isEnabled}
+                        onCheckedChange={(checked) =>
+                          onToggleCategory(category, checked)
+                        }
+                        ariaLabel={t('summary.toggleCategoryAria', {
+                          category: t(`categories.${category}`),
+                        })}
+                      />
+                    </div>
                   </div>
 
                   <div className="mt-4 flex items-baseline justify-between">
