@@ -325,7 +325,7 @@ export function App() {
         <section id="privacy-section" aria-label="Hero Section" className="flex flex-col items-center text-center space-y-4 pt-4 sm:pt-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-100 px-3.5 py-1 text-xs font-semibold text-neutral-800">
             <ShieldCheck className="h-4 w-4 text-emerald-600" />
-            <span>6 PII categories protected. 100% on your device.</span>
+            <span>{t('app.heroBadge')}</span>
           </div>
 
           <h1 className="max-w-4xl text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-950 leading-[1.12]">
@@ -333,7 +333,7 @@ export function App() {
           </h1>
 
           <p className="max-w-2xl text-base sm:text-lg text-neutral-600 leading-relaxed">
-            {t('intro.subheading')} Turn any sensitive file into a safe, shareable document without risking personal data.
+            {t('intro.subheading')}
           </p>
 
           {/* Privacy Guarantee Reassurance Banner */}

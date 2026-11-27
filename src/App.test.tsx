@@ -22,6 +22,13 @@ describe('PrivacyGuard App integration', () => {
     });
     fireEvent.click(sampleBtn);
 
+    // Shows plain language findings breakdown (addresses Concern 3)
+    expect(screen.getByText(/4 email addresses found/i)).toBeInTheDocument();
+    expect(screen.getByText(/4 phone numbers found/i)).toBeInTheDocument();
+    expect(screen.getByText(/2 Aadhaar-like numbers found/i)).toBeInTheDocument();
+    expect(screen.getByText(/1 PAN card number found/i)).toBeInTheDocument();
+    expect(screen.getByText(/1 Luhn-valid card number found/i)).toBeInTheDocument();
+
     // Shows Luhn rejection badge and redacted output
     expect(
       screen.getByText(/rejected by Luhn checksum/i)
@@ -47,6 +54,11 @@ describe('PrivacyGuard App integration', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'हिन्दी' }));
 
+    // Non-technical Hindi heading (addresses Concern 1)
+    expect(
+      screen.getByText('शेयर करने से पहले अपनी फाइल की निजी जानकारी छुपाएं।')
+    ).toBeInTheDocument();
+
     expect(
       screen.getByText(
         'आपका दस्तावेज़ आपके ही डिवाइस पर रहता है। हम इसे सीधे आपके ब्राउज़र में सुरक्षित रूप से प्रोसेस करते हैं।'
@@ -54,6 +66,23 @@ describe('PrivacyGuard App integration', () => {
     ).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: /नमूना दस्तावेज़ आज़माएँ/i })
+    ).toBeInTheDocument();
+
+    // Load sample in Hindi
+    fireEvent.click(
+      screen.getByRole('button', { name: /नमूना दस्तावेज़ आज़माएँ/i })
+    );
+
+    // Shows natural Hindi findings breakdown (addresses Concern 3)
+    expect(screen.getByText(/4 ईमेल पते मिले/i)).toBeInTheDocument();
+    expect(screen.getByText(/4 फ़ोन नंबर मिले/i)).toBeInTheDocument();
+    expect(screen.getByText(/2 आधार नंबर मिले/i)).toBeInTheDocument();
+    expect(screen.getByText(/1 पैन नंबर मिला/i)).toBeInTheDocument();
+    expect(screen.getByText(/1 मान्य कार्ड नंबर मिला/i)).toBeInTheDocument();
+
+    // Hindi download button clearly communicates safe file (addresses Concern 4)
+    expect(
+      screen.getByRole('button', { name: /सुरक्षित फ़ाइल डाउनलोड करें/i })
     ).toBeInTheDocument();
   });
 

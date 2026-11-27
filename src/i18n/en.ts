@@ -3,6 +3,7 @@ export const enTranslations = {
     name: 'PrivacyGuard',
     tagline: 'Share your documents. Protect your privacy.',
     privacyBadge: '100% Local Processing',
+    heroBadge: '6 types of private information protected · 100% on your device',
     privacyBanner:
       'Your document stays on your device. We process it locally in your browser.',
     privacySubnote:
@@ -14,23 +15,26 @@ export const enTranslations = {
   intro: {
     heading: 'Protect your file before sharing.',
     subheading:
-      'Find and hide private information in your documents.',
+      'Find and hide private information like phone numbers, emails, Aadhaar, PAN, and card numbers before sending your documents.',
   },
   steps: {
     step1Title: 'Upload or Paste',
     step1Desc: 'Add a TXT/CSV file, paste text, or load the sample.',
-    step2Title: 'Auto-Detect PII',
+    step2Title: 'Auto-Detect Private Details',
     step2Desc: 'Automatically find private information locally.',
     step3Title: 'Protect & Review',
     step3Desc: 'Choose masking style and verify side by side.',
-    step4Title: 'Download Safe File',
-    step4Desc: 'Export your sanitized TXT or CSV document.',
+    step4Title: 'Download Protected File',
+    step4Desc: 'Export your safe, protected TXT or CSV document.',
     stepPrefix: 'STEP {{number}}',
   },
   upload: {
     heading: 'Step 1: Add Your Document',
     subheading:
       'Drop a .txt or .csv file, paste text directly, or try our instant sample record.',
+    sampleCalloutTitle: 'Want to try FileRaksha first with zero risk?',
+    sampleCalloutDesc:
+      'Test the tool using a safe, fictional document. See how private details are identified and hidden without touching your own files.',
     trySample: 'Try Sample Document',
     trySampleHint:
       'Loads a safe, fictional record covering all 6 PII types plus a Luhn false-positive demo.',
@@ -71,20 +75,41 @@ export const enTranslations = {
     ipv4Singular: 'IPv4 Address',
   },
   summary: {
-    heading: 'Step 2: Private Information Found',
+    heading: 'Step 2: Private Information Found in Your File',
     subheading:
-      'Toggle any category on or off before exporting. All categories are protected by default.',
+      'Here is what was found. Toggle any category on or off before exporting your protected file.',
+    foundBreakdownTitle: 'Summary of detected items ready to be protected:',
     totalDetected: 'Total detected',
-    totalSelected: 'Selected for redaction',
+    totalSelected: 'Selected for protection',
     currentMode: 'Active mode',
     rejectedCardsBadge:
       '{{count}} card-like number(s) rejected by Luhn checksum (false positives prevented)',
+    rejectedCardsNote:
+      '{{count}} number that looked like a card failed checksum validation and was kept unchanged so real numbers are not wrongly touched.',
     enableAll: 'Protect All',
     disableAll: 'Uncheck All',
     toggleCategoryAria: 'Toggle protection for {{category}}',
     noEntitiesTitle: 'No private information detected',
     noEntitiesDesc:
       'We scanned your document locally and did not find matches for the supported patterns. Please still review manually before sharing.',
+    foundSingular: 'instance found',
+    foundPlural: 'instances found',
+    itemProtected: 'Protected in download',
+    itemIgnored: 'Kept unchanged (Not hidden)',
+    countsExplained: {
+      emailSingular: '{{count}} email address found',
+      emailPlural: '{{count}} email addresses found',
+      phoneSingular: '{{count}} phone number found',
+      phonePlural: '{{count}} phone numbers found',
+      aadhaarSingular: '{{count}} Aadhaar-like number found',
+      aadhaarPlural: '{{count}} Aadhaar-like numbers found',
+      panSingular: '{{count}} PAN card number found',
+      panPlural: '{{count}} PAN card numbers found',
+      credit_cardSingular: '{{count}} Luhn-valid card number found',
+      credit_cardPlural: '{{count}} Luhn-valid card numbers found',
+      ipv4Singular: '{{count}} IP address found',
+      ipv4Plural: '{{count}} IP addresses found',
+    },
   },
   modes: {
     heading: 'Step 3: Choose Protection Mode & Review',
@@ -92,7 +117,7 @@ export const enTranslations = {
       'Pick how sensitive values are hidden. Updates appear immediately in the comparison panel.',
     full: {
       title: 'Full Mask',
-      description: 'Replaces the entire sensitive value with [REDACTED].',
+      description: 'Replaces the entire sensitive value completely with [REDACTED].',
       example: 'Example: [REDACTED]',
     },
     partial: {
@@ -104,21 +129,21 @@ export const enTranslations = {
     pseudonym: {
       title: 'Consistent Pseudonymization',
       description:
-        'Replaces repeated values with the same ID (e.g., EMAIL_01, PHONE_01) in memory only.',
+        'Replaces repeated values with consistent aliases (e.g., EMAIL_01, PHONE_01) in memory only.',
       example: 'Example: EMAIL_01, PHONE_01',
     },
   },
   comparison: {
     heading: 'Side-by-Side Comparison',
     originalTitle: 'Original Document (Device Only)',
-    sanitizedTitle: 'Sanitized Output (Safe to Share)',
+    sanitizedTitle: 'Protected Output (Safe to Share)',
     viewFormatted: 'Highlighted View',
     viewDiff: 'Line Diff View',
     viewTable: 'Structured CSV Table',
     viewRawCsv: 'Raw CSV Text',
-    legendOriginal: 'Detected PII',
+    legendOriginal: 'Detected Private Details',
     legendSanitized: 'Protected Replacement',
-    legendAdded: 'Sanitized Line',
+    legendAdded: 'Protected Line',
     legendRemoved: 'Original Line',
     csvRow: 'Row {{num}}',
     emptyTitle: 'Ready to protect your document',
@@ -131,19 +156,22 @@ export const enTranslations = {
       'Aadhaar numbers are checked for 12-digit format and Verhoeff checksum. Format validation does not prove an Aadhaar number is genuine or belongs to a real person.',
     reviewReminderTitle: 'Please review before sharing',
     reviewReminderBody:
-      'Automated detection catches common structured patterns, but it can never guarantee 100% detection of every private detail (such as names, handwritten notes, or custom IDs). Always review the sanitized output before sharing.',
+      'Automated detection catches common structured patterns, but it can never guarantee 100% detection of every private detail (such as names, handwritten notes, or custom IDs). Always review the protected output before sharing.',
   },
   download: {
-    heading: 'Step 4: Download Sanitized File',
+    heading: 'Step 4: Download Protected File',
     subheading:
-      'Your sanitized file is generated directly in your browser. The original file is never exported.',
-    downloadButton: 'Download Sanitized {{format}}',
-    copyButton: 'Copy Sanitized Text',
+      'Your protected file is generated 100% locally on your device. The original file is never uploaded or exported.',
+    downloadButton: 'Download Protected File ({{format}})',
+    copyButton: 'Copy Protected Text',
     copied: 'Copied to clipboard!',
     successMessage:
       'Downloaded {{filename}} safely from your browser.',
     disabledHint: 'Load or paste a document first to enable download.',
     filenamePrefix: 'sanitized-',
+    safetyTitle: '100% Safe to Share',
+    safetyDesc:
+      'Your protected file contains only safe replacements for the private data selected. The original file is untouched and stays strictly on your device.',
   },
   log: {
     heading: 'Local Processing Log',
@@ -182,6 +210,6 @@ export const enTranslations = {
   },
   footer: {
     builtForPrivacy:
-      'PrivacyGuard runs 100% client-side. Disconnect from the internet after loading to verify zero network requests.',
+      'FileRaksha runs 100% client-side. Disconnect from the internet after loading to verify zero network requests.',
   },
 } as const;

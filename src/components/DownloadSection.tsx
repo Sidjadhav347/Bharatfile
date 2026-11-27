@@ -1,4 +1,4 @@
-import { Check, CheckCircle2, Copy, Download } from 'lucide-react';
+import { Check, CheckCircle2, Copy, Download, ShieldCheck } from 'lucide-react';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import type { DocumentAnalysis } from '../engine';
@@ -102,38 +102,50 @@ export function DownloadSection({
         <CardTitle>{t('download.heading')}</CardTitle>
         <CardDescription>{t('download.subheading')}</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-3 pt-5">
+      <CardContent className="space-y-4 pt-5">
         <div className="flex flex-wrap items-center gap-3">
           <Button
             size="lg"
             onClick={handleDownload}
+            aria-label={`Download Protected File (Download Sanitized ${formatUpper})`}
             className={cn(
-              "w-full sm:w-auto bg-neutral-900 text-white hover:bg-neutral-800",
+              "w-full sm:w-auto bg-neutral-900 text-white hover:bg-neutral-800 font-bold shadow-xs cursor-pointer",
               !analysis && "opacity-80"
             )}
           >
             <Download className="h-4 w-4" aria-hidden="true" />
-            {t('download.downloadButton', { format: formatUpper })}
+            <span>{t('download.downloadButton', { format: formatUpper })}</span>
           </Button>
 
           <Button
             variant="outline"
             size="lg"
             onClick={handleCopy}
-            className={cn("w-full sm:w-auto", !analysis && "opacity-80")}
+            className={cn("w-full sm:w-auto font-medium cursor-pointer", !analysis && "opacity-80")}
           >
             {copied ? (
               <>
                 <Check className="h-4 w-4 text-emerald-600" aria-hidden="true" />
-                {t('download.copied')}
+                <span>{t('download.copied')}</span>
               </>
             ) : (
               <>
                 <Copy className="h-4 w-4 text-neutral-500" aria-hidden="true" />
-                {t('download.copyButton')}
+                <span>{t('download.copyButton')}</span>
               </>
             )}
           </Button>
+        </div>
+
+        {/* Clear Privacy & Safety Guarantee */}
+        <div className="rounded-xl border border-emerald-200/80 bg-emerald-50/50 p-3.5 text-xs text-neutral-700 space-y-1">
+          <div className="flex items-center gap-2 font-bold text-emerald-950">
+            <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
+            <span>{t('download.safetyTitle')}</span>
+          </div>
+          <p className="text-emerald-900/80 leading-relaxed pl-6">
+            {t('download.safetyDesc')}
+          </p>
         </div>
 
         {!analysis && (

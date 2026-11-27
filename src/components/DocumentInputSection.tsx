@@ -113,34 +113,49 @@ export function DocumentInputSection({
             </CardDescription>
           </div>
 
-          {/* Adobe-style pill action button for Instant Sample */}
-          <div className="flex items-center">
-            {loadedDoc?.source === 'sample' ? (
-              <Button
-                variant="outline"
-                size="default"
-                onClick={onResetSample}
-                className="w-full sm:w-auto"
-              >
-                <RotateCcw className="h-4 w-4" aria-hidden="true" />
-                {t('upload.resetSample')}
-              </Button>
-            ) : (
-              <Button
-                variant="default"
-                size="default"
-                onClick={onLoadSample}
-                className="w-full sm:w-auto bg-neutral-900 text-white hover:bg-neutral-800"
-              >
-                <Sparkles className="h-4 w-4 text-amber-300" aria-hidden="true" />
-                {t('upload.trySample')}
-              </Button>
-            )}
-          </div>
+          {/* Reset sample document action if currently loaded */}
+          {loadedDoc?.source === 'sample' && (
+            <Button
+              variant="outline"
+              size="default"
+              onClick={onResetSample}
+              className="w-full sm:w-auto"
+            >
+              <RotateCcw className="h-4 w-4" aria-hidden="true" />
+              {t('upload.resetSample')}
+            </Button>
+          )}
         </div>
       </CardHeader>
 
       <CardContent className="space-y-4 pt-4">
+        {/* Prominent Sample Document Callout Banner for First-Time Users */}
+        {!loadedDoc && (
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50/80 p-4 sm:p-5 shadow-2xs">
+            <div className="flex items-start gap-3.5">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-500 text-white shadow-xs">
+                <Sparkles className="h-6 w-6" aria-hidden="true" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-neutral-900">
+                  {t('upload.sampleCalloutTitle')}
+                </p>
+                <p className="text-xs text-neutral-600 mt-1 max-w-xl leading-relaxed">
+                  {t('upload.sampleCalloutDesc')}
+                </p>
+              </div>
+            </div>
+            <Button
+              variant="default"
+              size="lg"
+              onClick={onLoadSample}
+              className="w-full sm:w-auto shrink-0 bg-neutral-900 text-white hover:bg-neutral-800 shadow-xs cursor-pointer font-bold"
+            >
+              <Sparkles className="h-4 w-4 text-amber-300" aria-hidden="true" />
+              {t('upload.trySample')}
+            </Button>
+          </div>
+        )}
         {/* Selected Document Status Bar */}
         {loadedDoc && (
           <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
