@@ -84,13 +84,38 @@ export function DownloadSection({
       document.getElementById('upload-section')?.scrollIntoView({ behavior: 'smooth' });
       return;
     }
-    if (!navigator.clipboard?.writeText) return;
     try {
-      await navigator.clipboard.writeText(analysis.sanitizedText);
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(analysis.sanitizedText);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = analysis.sanitizedText;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Clipboard blocked silently
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = analysis.sanitizedText;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 2000);
+      } catch {
+        // Fallback suppressed
+      }
     }
   };
 

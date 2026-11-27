@@ -159,11 +159,14 @@ export function DetectionSummarySection({
         {/* Plain-Language Found Details Callout */}
         {analysis.totalDetected > 0 && (
           <div className="mt-4 rounded-2xl border border-neutral-200 bg-neutral-50/90 p-4 sm:p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
-              <p className="text-xs sm:text-sm font-bold text-neutral-900">
-                {t('summary.foundBreakdownTitle')}
-              </p>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
+                <p className="text-xs sm:text-sm font-bold text-neutral-900">
+                  {t('summary.foundBreakdownTitle')}
+                </p>
+              </div>
+              <span className="text-[11px] text-neutral-500 font-medium">Click any item to toggle</span>
             </div>
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
               {ALL_PII_CATEGORIES.filter((cat) => analysis.countsByCategory[cat] > 0).map((cat) => {
@@ -176,23 +179,39 @@ export function DetectionSummarySection({
                 return (
                   <li
                     key={cat}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => onToggleCategory(cat, !isEnabled)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        onToggleCategory(cat, !isEnabled);
+                      }
+                    }}
                     className={cn(
-                      'flex items-center justify-between rounded-xl border px-3 py-2 text-xs font-semibold transition-colors',
+                      'flex items-center justify-between rounded-xl border px-3 py-2 text-xs font-semibold transition-all cursor-pointer select-none active:scale-[0.98] hover:shadow-xs',
                       isEnabled
-                        ? 'border-emerald-200 bg-white text-emerald-950 shadow-2xs'
-                        : 'border-neutral-200 bg-neutral-100/80 text-neutral-500'
+                        ? 'border-emerald-300 bg-white text-emerald-950 shadow-2xs hover:bg-emerald-50/40'
+                        : 'border-neutral-200 bg-neutral-100/80 text-neutral-500 hover:bg-neutral-200/80'
                     )}
                   >
                     <div className="flex items-center gap-2 truncate">
                       <span
                         className={cn(
-                          'h-2 w-2 rounded-full shrink-0',
-                          isEnabled ? 'bg-emerald-500' : 'bg-neutral-400'
+                          'h-2.5 w-2.5 rounded-full shrink-0 transition-colors',
+                          isEnabled ? 'bg-emerald-500 ring-2 ring-emerald-200' : 'bg-neutral-400'
                         )}
                       />
                       <span className="truncate">{t(key, { count })}</span>
                     </div>
-                    <span className="text-[10px] uppercase font-bold shrink-0 ml-2">
+                    <span
+                      className={cn(
+                        'text-[10px] uppercase font-bold shrink-0 ml-2 px-2 py-0.5 rounded-full transition-colors',
+                        isEnabled
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : 'bg-neutral-200 text-neutral-600'
+                      )}
+                    >
                       {isEnabled ? '✓ ' + t('summary.itemProtected') : t('summary.itemIgnored')}
                     </span>
                   </li>

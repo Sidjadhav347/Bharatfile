@@ -11,6 +11,15 @@ export function Header() {
     void i18n.changeLanguage(lang);
   };
 
+  const scrollToTarget = (targetId: string) => {
+    const el = document.getElementById(targetId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      document.getElementById('upload-section')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white">
       {/* Top tier navigation matching Adobe's layout */}
@@ -35,28 +44,28 @@ export function Header() {
             </button>
             <button
               type="button"
-              onClick={() => document.getElementById('upload-section')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => scrollToTarget('upload-section')}
               className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors"
             >
               Features
             </button>
             <button
               type="button"
-              onClick={() => document.getElementById('privacy-section')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => scrollToTarget('privacy-section')}
               className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors"
             >
               Privacy Standard
             </button>
             <button
               type="button"
-              onClick={() => document.getElementById('summary-section')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => scrollToTarget('summary-section')}
               className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors"
             >
               Security & Luhn
             </button>
             <button
               type="button"
-              onClick={() => document.getElementById('comparison-section')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => scrollToTarget('comparison-section')}
               className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors"
             >
               Verification

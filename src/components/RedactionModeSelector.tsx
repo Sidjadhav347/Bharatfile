@@ -52,10 +52,10 @@ export function RedactionModeSelector({
               aria-checked={selected}
               onClick={() => onChangeMode(item.id)}
               className={cn(
-                'inline-flex items-center gap-2 rounded-full px-5 py-2 text-xs sm:text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900',
+                'inline-flex items-center gap-2 rounded-full px-5 py-2 text-xs sm:text-sm font-semibold transition-all cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 active:scale-[0.97]',
                 selected
                   ? 'bg-neutral-900 text-white shadow-xs'
-                  : 'text-neutral-700 hover:text-neutral-950 hover:bg-white/60'
+                  : 'text-neutral-700 hover:text-neutral-950 hover:bg-white/80'
               )}
             >
               <Icon className="h-4 w-4" aria-hidden="true" />
