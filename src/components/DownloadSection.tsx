@@ -89,18 +89,18 @@ export function DownloadSection({
   const formatUpper = (analysis?.format ?? 'txt').toUpperCase();
 
   return (
-    <Card className="border-slate-200/80 bg-white shadow-[0_4px_24px_-4px_rgba(15,23,42,0.06)]">
-      <CardHeader className="border-b border-slate-100 pb-3">
+    <Card className="border-neutral-200 bg-white shadow-sm">
+      <CardHeader className="border-b border-neutral-100 pb-3">
         <CardTitle>{t('download.heading')}</CardTitle>
         <CardDescription>{t('download.subheading')}</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-3 pt-4">
+      <CardContent className="space-y-3 pt-5">
         <div className="flex flex-wrap items-center gap-3">
           <Button
             size="lg"
             disabled={!analysis}
             onClick={handleDownload}
-            className="w-full sm:w-auto"
+            className="w-full sm:w-auto bg-neutral-900 text-white hover:bg-neutral-800"
           >
             <Download className="h-4 w-4" aria-hidden="true" />
             {t('download.downloadButton', { format: formatUpper })}
@@ -120,7 +120,7 @@ export function DownloadSection({
               </>
             ) : (
               <>
-                <Copy className="h-4 w-4 text-slate-500" aria-hidden="true" />
+                <Copy className="h-4 w-4 text-neutral-500" aria-hidden="true" />
                 {t('download.copyButton')}
               </>
             )}
@@ -128,13 +128,13 @@ export function DownloadSection({
         </div>
 
         {!analysis && (
-          <p className="text-xs text-slate-400">{t('download.disabledHint')}</p>
+          <p className="text-xs text-neutral-400">{t('download.disabledHint')}</p>
         )}
 
         {lastDownloadedFile && analysis && (
           <div
             role="status"
-            className="flex items-center gap-2 rounded-xl border border-emerald-200/80 bg-emerald-50/70 px-3.5 py-2.5 text-xs font-medium text-emerald-900"
+            className="flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-900"
           >
             <CheckCircle2
               className="h-4 w-4 shrink-0 text-emerald-600"

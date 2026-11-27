@@ -1,4 +1,4 @@
-import { Globe, ShieldCheck } from 'lucide-react';
+import { Globe, LayoutGrid, ShieldCheck } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import bharatFileLogo from '../assets/bharatfile-logo.jpg';
 import { cn } from '../lib/utils';
@@ -12,68 +12,92 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/85 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        {/* Brand Logo & Tagline */}
+    <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white">
+      {/* Top tier navigation matching Adobe's layout */}
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
+        {/* Left: Brand logo & Navigation categories */}
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3">
+            <img
+              src={bharatFileLogo}
+              alt="BharatFile logo"
+              className="h-8 w-auto object-contain sm:h-9"
+            />
+          </div>
+
+          <nav className="hidden lg:flex items-center gap-6 text-xs font-semibold text-neutral-800">
+            <span className="relative py-3.5 font-bold text-neutral-900 border-b-2 border-neutral-950 cursor-pointer">
+              {t('app.name')}
+            </span>
+            <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors">
+              Features
+            </span>
+            <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors">
+              Privacy Standard
+            </span>
+            <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors">
+              Security & Luhn
+            </span>
+            <span className="text-neutral-600 hover:text-neutral-900 cursor-pointer transition-colors">
+              Verification
+            </span>
+          </nav>
+        </div>
+
+        {/* Right: Adobe-style pill CTA & Language Switcher */}
         <div className="flex items-center gap-3">
-          <img
-            src={bharatFileLogo}
-            alt="BharatFile logo"
-            className="h-9 w-auto object-contain sm:h-10"
-          />
-          <div className="hidden sm:flex sm:items-center sm:gap-2 border-l border-slate-200 pl-3">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700 border border-emerald-200/60">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
-              </span>
-              {t('app.privacyBadge')}
-            </span>
-            <span className="text-xs text-slate-500 hidden md:inline">
-              {t('app.tagline')}
-            </span>
+          <div className="hidden sm:flex items-center gap-1.5 text-xs text-neutral-500 font-medium">
+            <ShieldCheck className="h-4 w-4 text-emerald-600" />
+            <span>100% Client-Side</span>
+          </div>
+
+          <LayoutGrid className="hidden sm:block h-4 w-4 text-neutral-400" />
+
+          {/* Language Switcher Styled like Adobe's Sign in / Locale button */}
+          <div
+            className="flex items-center gap-1 rounded-full border border-neutral-300 bg-neutral-50 p-0.5"
+            role="group"
+            aria-label={t('app.languageLabel')}
+          >
+            <Globe className="ml-2 h-3.5 w-3.5 text-neutral-500" aria-hidden="true" />
+            <button
+              type="button"
+              onClick={() => switchLanguage('en')}
+              aria-pressed={currentLang === 'en'}
+              className={cn(
+                'rounded-full px-3 py-1 text-xs font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900',
+                currentLang === 'en'
+                  ? 'bg-neutral-900 text-white shadow-2xs'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              )}
+            >
+              {t('app.english')}
+            </button>
+            <button
+              type="button"
+              onClick={() => switchLanguage('hi')}
+              aria-pressed={currentLang === 'hi'}
+              className={cn(
+                'rounded-full px-3 py-1 text-xs font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900',
+                currentLang === 'hi'
+                  ? 'bg-neutral-900 text-white shadow-2xs'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              )}
+            >
+              {t('app.hindi')}
+            </button>
           </div>
         </div>
+      </div>
 
-        {/* Center privacy indicator (desktop) */}
-        <div className="hidden lg:flex items-center gap-2 rounded-full border border-slate-200/80 bg-slate-50/80 px-3.5 py-1 text-xs text-slate-600">
-          <ShieldCheck className="h-3.5 w-3.5 text-[#1965e0]" />
-          <span>Device-Only Engine · Zero Cloud Uploads</span>
-        </div>
-
-        {/* Language Switcher */}
-        <div
-          className="flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100/80 p-0.5"
-          role="group"
-          aria-label={t('app.languageLabel')}
-        >
-          <Globe className="ml-2 h-3.5 w-3.5 text-slate-400" aria-hidden="true" />
-          <button
-            type="button"
-            onClick={() => switchLanguage('en')}
-            aria-pressed={currentLang === 'en'}
-            className={cn(
-              'rounded-full px-3 py-1 text-xs font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1965e0]',
-              currentLang === 'en'
-                ? 'bg-white text-slate-900 shadow-2xs'
-                : 'text-slate-600 hover:text-slate-900'
-            )}
-          >
-            {t('app.english')}
-          </button>
-          <button
-            type="button"
-            onClick={() => switchLanguage('hi')}
-            aria-pressed={currentLang === 'hi'}
-            className={cn(
-              'rounded-full px-3 py-1 text-xs font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1965e0]',
-              currentLang === 'hi'
-                ? 'bg-white text-slate-900 shadow-2xs'
-                : 'text-slate-600 hover:text-slate-900'
-            )}
-          >
-            {t('app.hindi')}
-          </button>
+      {/* Sub-bar breadcrumbs matching Adobe's "Home | Adobe Creative Cloud" */}
+      <div className="border-t border-neutral-100 bg-neutral-50/70 px-4 py-1.5 text-[11px] text-neutral-500 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center gap-2">
+          <span className="hover:text-neutral-900 cursor-pointer">Home</span>
+          <span className="text-neutral-300">|</span>
+          <span className="font-semibold text-neutral-800">
+            {t('app.name')} — Client-Side PII Redactor
+          </span>
         </div>
       </div>
     </header>

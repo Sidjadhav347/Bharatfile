@@ -2,13 +2,6 @@ import { EyeOff, KeyRound, Shield } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { RedactionMode } from '../engine';
 import { cn } from '../lib/utils';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from './ui/card';
 
 interface RedactionModeSelectorProps {
   mode: RedactionMode;
@@ -31,73 +24,53 @@ export function RedactionModeSelector({
   const { t } = useTranslation();
 
   return (
-    <Card className="border-slate-200/80 bg-white shadow-[0_4px_24px_-4px_rgba(15,23,42,0.06)]">
-      <CardHeader className="border-b border-slate-100 pb-3">
-        <CardTitle>{t('modes.heading')}</CardTitle>
-        <CardDescription>{t('modes.subheading')}</CardDescription>
-      </CardHeader>
-      <CardContent className="pt-4">
-        <div
-          className="grid grid-cols-1 gap-3 md:grid-cols-3"
-          role="radiogroup"
-          aria-label={t('modes.heading')}
-        >
-          {MODES.map((item) => {
-            const Icon = item.icon;
-            const selected = mode === item.id;
+    <div className="flex flex-col items-center gap-3 py-2">
+      <div className="text-center">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-500">
+          {t('modes.heading')}
+        </h3>
+        <p className="mt-0.5 text-xs text-neutral-600">
+          {t('modes.subheading')}
+        </p>
+      </div>
 
-            return (
-              <button
-                key={item.id}
-                type="button"
-                role="radio"
-                aria-checked={selected}
-                onClick={() => onChangeMode(item.id)}
-                className={cn(
-                  'flex flex-col items-start rounded-xl border p-4 text-left transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1965e0]',
-                  selected
-                    ? 'border-[#1965e0] bg-blue-50/50 ring-1 ring-[#1965e0]/20 shadow-2xs'
-                    : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/70'
-                )}
-              >
-                <div className="flex w-full items-center justify-between gap-2">
-                  <div className="flex items-center gap-2.5">
-                    <div
-                      className={cn(
-                        'flex h-8 w-8 items-center justify-center rounded-lg transition-colors',
-                        selected
-                          ? 'bg-[#1965e0] text-white shadow-2xs'
-                          : 'bg-slate-100 text-slate-500'
-                      )}
-                    >
-                      <Icon className="h-4 w-4" aria-hidden="true" />
-                    </div>
-                    <span className="text-sm font-bold text-slate-900">
-                      {t(`modes.${item.id}.title`)}
-                    </span>
-                  </div>
-                  <span
-                    className={cn(
-                      'h-4 w-4 rounded-full border-2 flex items-center justify-center transition-colors',
-                      selected ? 'border-[#1965e0]' : 'border-slate-300'
-                    )}
-                  >
-                    {selected && (
-                      <span className="h-2 w-2 rounded-full bg-[#1965e0]" />
-                    )}
-                  </span>
-                </div>
-                <p className="mt-2.5 text-xs leading-relaxed text-slate-500">
-                  {t(`modes.${item.id}.description`)}
-                </p>
-                <p className="mt-2 rounded-lg border border-slate-200/80 bg-slate-50/80 px-2.5 py-1 font-mono text-[11px] text-slate-700">
-                  {t(`modes.${item.id}.example`)}
-                </p>
-              </button>
-            );
-          })}
-        </div>
-      </CardContent>
-    </Card>
+      {/* Adobe-style Centered Segmented Pill Control */}
+      <div
+        className="inline-flex flex-wrap items-center justify-center gap-1 rounded-full border border-neutral-200 bg-neutral-100 p-1.5 shadow-2xs"
+        role="radiogroup"
+        aria-label={t('modes.heading')}
+      >
+        {MODES.map((item) => {
+          const Icon = item.icon;
+          const selected = mode === item.id;
+
+          return (
+            <button
+              key={item.id}
+              type="button"
+              role="radio"
+              aria-checked={selected}
+              onClick={() => onChangeMode(item.id)}
+              className={cn(
+                'inline-flex items-center gap-2 rounded-full px-5 py-2 text-xs sm:text-sm font-semibold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900',
+                selected
+                  ? 'bg-neutral-900 text-white shadow-xs'
+                  : 'text-neutral-700 hover:text-neutral-950 hover:bg-white/60'
+              )}
+            >
+              <Icon className="h-4 w-4" aria-hidden="true" />
+              <span>{t(`modes.${item.id}.title`)}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Dynamic Example hint below active pill */}
+      <div className="text-center">
+        <span className="inline-block rounded-full bg-white px-3.5 py-1 text-xs font-mono text-neutral-700 border border-neutral-200/80 shadow-2xs">
+          {t(`modes.${mode}.example`)}
+        </span>
+      </div>
+    </div>
   );
 }
