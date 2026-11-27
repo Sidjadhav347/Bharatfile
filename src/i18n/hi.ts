@@ -11,6 +11,11 @@ export const hiTranslations = {
     english: 'English',
     hindi: 'हिन्दी',
   },
+  intro: {
+    heading: 'साझा करने से पहले अपनी फ़ाइल सुरक्षित करें।',
+    subheading:
+      'अपने दस्तावेज़ों में मौजूद निजी जानकारी खोजें और छिपाएँ।',
+  },
   steps: {
     step1Title: 'अपलोड या पेस्ट करें',
     step1Desc: 'TXT/CSV फ़ाइल चुनें, टेक्स्ट पेस्ट करें या नमूना देखें।',

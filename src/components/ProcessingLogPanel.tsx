@@ -35,21 +35,26 @@ export function ProcessingLogPanel({ entries }: ProcessingLogPanelProps) {
   };
 
   return (
-    <Card>
-      <CardHeader className="pb-3">
-        <div className="flex items-center gap-2">
-          <Activity className="h-4 w-4 text-emerald-700" aria-hidden="true" />
-          <CardTitle className="text-base">{t('log.heading')}</CardTitle>
+    <Card className="border-slate-200/80 bg-white shadow-[0_4px_24px_-4px_rgba(15,23,42,0.06)]">
+      <CardHeader className="border-b border-slate-100 pb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Activity className="h-4 w-4 text-[#1965e0]" aria-hidden="true" />
+            <CardTitle className="text-base">{t('log.heading')}</CardTitle>
+          </div>
+          <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-mono font-medium text-slate-600">
+            in-memory audit
+          </span>
         </div>
         <CardDescription className="text-xs">{t('log.subheading')}</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-4">
         {entries.length === 0 ? (
-          <p className="rounded-lg border border-slate-200 bg-slate-50 px-3.5 py-4 text-xs text-slate-500">
+          <p className="rounded-xl border border-slate-200/80 bg-slate-50/70 px-3.5 py-4 text-xs text-slate-400">
             {t('log.empty')}
           </p>
         ) : (
-          <ul className="max-h-60 space-y-1.5 overflow-y-auto pr-1">
+          <ul className="max-h-60 space-y-2 overflow-y-auto pr-1">
             {entries.map((entry) => {
               const Icon =
                 entry.level === 'success'
@@ -61,21 +66,21 @@ export function ProcessingLogPanel({ entries }: ProcessingLogPanelProps) {
               return (
                 <li
                   key={entry.id}
-                  className="flex items-start gap-2.5 rounded-lg border border-slate-100 bg-slate-50/70 px-3 py-2 text-xs"
+                  className="flex items-start gap-2.5 rounded-xl border border-slate-100 bg-slate-50/60 px-3 py-2 text-xs transition-colors hover:bg-slate-50"
                 >
                   <Icon
                     className={cn(
                       'mt-0.5 h-3.5 w-3.5 shrink-0',
-                      entry.level === 'success' && 'text-emerald-700',
+                      entry.level === 'success' && 'text-emerald-600',
                       entry.level === 'warning' && 'text-amber-600',
-                      entry.level === 'info' && 'text-slate-500'
+                      entry.level === 'info' && 'text-[#1965e0]'
                     )}
                     aria-hidden="true"
                   />
-                  <span className="font-mono text-[11px] text-slate-400 shrink-0">
+                  <span className="font-mono text-[10px] text-slate-400 shrink-0 mt-0.5">
                     {entry.timestamp}
                   </span>
-                  <span className="text-slate-800">
+                  <span className="text-slate-700 leading-relaxed">
                     {entry.params
                       ? t(entry.key, resolveParams(entry) ?? {})
                       : t(entry.key)}

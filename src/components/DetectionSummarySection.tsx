@@ -40,39 +40,46 @@ const CATEGORY_META: Record<
   PiiCategory,
   {
     icon: typeof Mail;
-    badgeVariant: 'sky' | 'emerald' | 'amber' | 'violet' | 'rose' | 'indigo';
-    accentBorder: string;
+    badgeVariant: 'default' | 'sky' | 'emerald' | 'amber' | 'violet' | 'rose' | 'indigo';
+    iconBg: string;
+    iconColor: string;
   }
 > = {
   email: {
     icon: Mail,
     badgeVariant: 'sky',
-    accentBorder: 'border-l-sky-500',
+    iconBg: 'bg-sky-50',
+    iconColor: 'text-sky-600',
   },
   phone: {
     icon: Phone,
     badgeVariant: 'emerald',
-    accentBorder: 'border-l-emerald-500',
+    iconBg: 'bg-emerald-50',
+    iconColor: 'text-emerald-600',
   },
   aadhaar: {
     icon: Fingerprint,
-    badgeVariant: 'amber',
-    accentBorder: 'border-l-amber-500',
+    badgeVariant: 'indigo',
+    iconBg: 'bg-blue-50',
+    iconColor: 'text-[#1965e0]',
   },
   pan: {
     icon: IdCard,
     badgeVariant: 'violet',
-    accentBorder: 'border-l-violet-500',
+    iconBg: 'bg-violet-50',
+    iconColor: 'text-violet-600',
   },
   credit_card: {
     icon: CreditCard,
     badgeVariant: 'rose',
-    accentBorder: 'border-l-rose-500',
+    iconBg: 'bg-rose-50',
+    iconColor: 'text-rose-600',
   },
   ipv4: {
     icon: Network,
-    badgeVariant: 'indigo',
-    accentBorder: 'border-l-indigo-500',
+    badgeVariant: 'default',
+    iconBg: 'bg-slate-100',
+    iconColor: 'text-slate-600',
   },
 };
 
@@ -88,7 +95,7 @@ export function DetectionSummarySection({
   const modeTitle = t(`modes.${redactionMode}.title`);
 
   return (
-    <Card>
+    <Card className="border-slate-200/80 bg-white shadow-[0_4px_24px_-4px_rgba(15,23,42,0.06)]">
       <CardHeader className="border-b border-slate-100 pb-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -115,31 +122,31 @@ export function DetectionSummarySection({
           </div>
         </div>
 
-        {/* Summary KPI Pills */}
+        {/* Summary KPI Pills styled like Sentra metrics */}
         <div className="mt-3 flex flex-wrap items-center gap-2.5">
-          <div className="inline-flex items-center gap-2 rounded-lg bg-slate-100 px-3 py-1.5 text-sm">
-            <span className="text-slate-600">{t('summary.totalDetected')}:</span>
-            <span className="font-bold text-slate-900">
+          <div className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50/80 px-3.5 py-1.5 text-xs">
+            <span className="text-slate-500 font-medium">{t('summary.totalDetected')}:</span>
+            <span className="font-bold text-slate-900 text-sm">
               {analysis.totalDetected}
             </span>
           </div>
-          <div className="inline-flex items-center gap-2 rounded-lg bg-emerald-50 px-3 py-1.5 text-sm border border-emerald-200">
-            <span className="text-emerald-800">{t('summary.totalSelected')}:</span>
-            <span className="font-bold text-emerald-950">
+          <div className="inline-flex items-center gap-2 rounded-xl border border-blue-200/80 bg-blue-50/70 px-3.5 py-1.5 text-xs">
+            <span className="text-blue-700 font-medium">{t('summary.totalSelected')}:</span>
+            <span className="font-bold text-[#1965e0] text-sm">
               {analysis.totalSelectedForRedaction}
             </span>
           </div>
-          <div className="inline-flex items-center gap-2 rounded-lg bg-indigo-50 px-3 py-1.5 text-sm border border-indigo-200">
-            <span className="text-indigo-800">{t('summary.currentMode')}:</span>
-            <span className="font-bold text-indigo-950">{modeTitle}</span>
+          <div className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50/80 px-3.5 py-1.5 text-xs">
+            <span className="text-slate-500 font-medium">{t('summary.currentMode')}:</span>
+            <span className="font-semibold text-slate-900">{modeTitle}</span>
           </div>
         </div>
 
         {/* Luhn False-Positive Rejection Banner */}
         {analysis.rejectedCardCandidates > 0 && (
-          <div className="mt-3 flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3.5 py-2 text-xs font-medium text-amber-950">
+          <div className="mt-3 flex items-center gap-2.5 rounded-xl border border-emerald-200/80 bg-emerald-50/70 px-3.5 py-2 text-xs font-medium text-emerald-900">
             <ShieldCheck
-              className="h-4 w-4 shrink-0 text-amber-700"
+              className="h-4 w-4 shrink-0 text-emerald-600"
               aria-hidden="true"
             />
             <span>
@@ -153,15 +160,15 @@ export function DetectionSummarySection({
 
       <CardContent className="pt-4">
         {analysis.totalDetected === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50 px-6 py-8 text-center">
+          <div className="flex flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50/60 px-6 py-8 text-center">
             <ShieldAlert
               className="h-8 w-8 text-slate-400"
               aria-hidden="true"
             />
-            <p className="mt-2 text-sm font-semibold text-slate-800">
+            <p className="mt-2 text-sm font-semibold text-slate-900">
               {t('summary.noEntitiesTitle')}
             </p>
-            <p className="mt-1 max-w-lg text-xs text-slate-600">
+            <p className="mt-1 max-w-lg text-xs text-slate-500">
               {t('summary.noEntitiesDesc')}
             </p>
           </div>
@@ -181,18 +188,25 @@ export function DetectionSummarySection({
                 <div
                   key={category}
                   className={cn(
-                    'flex items-center justify-between rounded-xl border border-l-4 bg-white p-3.5 transition-opacity',
-                    meta.accentBorder,
-                    !isEnabled && 'opacity-60 bg-slate-50'
+                    'group relative flex items-center justify-between rounded-xl border p-3.5 transition-all',
+                    isEnabled
+                      ? 'border-slate-200 bg-white hover:border-slate-300 shadow-2xs'
+                      : 'border-slate-200/60 bg-slate-50/60 opacity-60'
                   )}
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-700">
+                    <div
+                      className={cn(
+                        'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors',
+                        meta.iconBg,
+                        meta.iconColor
+                      )}
+                    >
                       <Icon className="h-4 w-4" aria-hidden="true" />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="text-lg font-bold text-slate-900">
+                        <span className="text-xl font-bold tracking-tight text-slate-900 font-mono">
                           {count}
                         </span>
                         <Badge variant={meta.badgeVariant}>{label}</Badge>

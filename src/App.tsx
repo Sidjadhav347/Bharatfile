@@ -1,3 +1,4 @@
+import { CheckCircle2, Lock, Sparkles } from 'lucide-react';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ComparisonWorkspace } from './components/ComparisonWorkspace';
@@ -160,7 +161,6 @@ export function App() {
       setLastDownloadedFile(null);
       setIsScanning(true);
 
-      // Clear raw state and apply synchronously via microtask so scanning state renders cleanly
       setRawContent(content);
       setLoadedDoc(meta);
       runInitialScanLogs(content, meta, redactionMode, enabledCategories);
@@ -317,15 +317,54 @@ export function App() {
     : 3;
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    <div className="relative min-h-screen flex flex-col bg-[#f8fafc] text-slate-900 overflow-x-hidden">
+      {/* Sentra-inspired subtle background grid & atmospheric gradient glow */}
+      <div className="pointer-events-none absolute inset-0 bg-grid-subtle opacity-75" />
+      <div className="pointer-events-none absolute -top-40 right-1/4 h-96 w-96 rounded-full bg-sky-200/40 blur-3xl" />
+      <div className="pointer-events-none absolute top-80 -left-20 h-80 w-80 rounded-full bg-blue-100/50 blur-3xl" />
+
       <Header />
 
-      <main className="mx-auto w-full max-w-7xl flex-1 space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+      <main className="relative z-10 mx-auto w-full max-w-6xl flex-1 space-y-7 px-4 py-8 sm:px-6 lg:px-8">
+        {/* Sentra-style Hero Header Section */}
+        <section aria-label="Hero Introduction" className="pt-2 sm:pt-4">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-2xl space-y-3">
+              <div className="inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50/80 px-3 py-1 text-xs font-semibold text-[#1965e0]">
+                <Sparkles className="h-3.5 w-3.5" />
+                <span>Next-Gen Client-Side PII Sanitizer</span>
+              </div>
+              <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl sm:leading-[1.12]">
+                Privacy that explains itself.
+              </h1>
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+                {t('intro.heading')} {t('intro.subheading')}
+              </p>
+            </div>
+
+            {/* Sentra-style Floating Privacy Reassurance Badge */}
+            <div className="flex flex-col gap-2 rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm backdrop-blur-sm lg:max-w-sm">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-700">
+                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                <span>Device Isolation Guarantee</span>
+              </div>
+              <p className="text-xs font-semibold text-slate-900">
+                {t('app.privacyBanner')}
+              </p>
+              <p className="text-[11px] text-slate-500 leading-normal">
+                {t('app.privacySubnote')}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Step Indicator */}
         <StepIndicator
           currentStep={currentStep}
           hasDownloaded={Boolean(lastDownloadedFile)}
         />
 
+        {/* Document Input Section */}
         <DocumentInputSection
           loadedDoc={loadedDoc}
           errorMsg={errorMsg}
@@ -337,6 +376,7 @@ export function App() {
           onSetError={setErrorMsg}
         />
 
+        {/* Detection Summary & Redaction Mode Selection */}
         {analysis && (
           <>
             <DetectionSummarySection
@@ -354,12 +394,14 @@ export function App() {
           </>
         )}
 
+        {/* Side-by-Side Comparison Workspace */}
         <ComparisonWorkspace
           analysis={analysis}
           enabledCategories={enabledCategories}
           isScanning={isScanning}
         />
 
+        {/* Download Section & Processing Log */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <DownloadSection
             analysis={analysis}
@@ -371,9 +413,19 @@ export function App() {
         </div>
       </main>
 
-      <footer className="border-t border-slate-200 bg-white py-4">
-        <div className="mx-auto max-w-7xl px-4 text-center text-xs text-slate-500 sm:px-6 lg:px-8">
-          {t('footer.builtForPrivacy')}
+      <footer className="relative z-10 border-t border-slate-200/80 bg-white/80 py-5 backdrop-blur-xs">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 text-xs text-slate-500 sm:flex-row sm:px-6 lg:px-8">
+          <div className="flex items-center gap-2">
+            <Lock className="h-3.5 w-3.5 text-slate-400" />
+            <span>{t('footer.builtForPrivacy')}</span>
+          </div>
+          <div className="flex items-center gap-4 text-[11px] text-slate-400">
+            <span>Client-side only</span>
+            <span>·</span>
+            <span>Luhn Validated</span>
+            <span>·</span>
+            <span>Zero Remote Storage</span>
+          </div>
         </div>
       </footer>
     </div>

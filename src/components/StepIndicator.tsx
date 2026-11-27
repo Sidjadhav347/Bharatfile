@@ -39,7 +39,7 @@ export function StepIndicator({ currentStep, hasDownloaded }: StepIndicatorProps
 
   return (
     <nav aria-label="Workflow steps" className="w-full">
-      <ol className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <ol className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
         {steps.map((step) => {
           const Icon = step.icon;
           const isComplete =
@@ -50,18 +50,18 @@ export function StepIndicator({ currentStep, hasDownloaded }: StepIndicatorProps
             <li
               key={step.num}
               className={cn(
-                'flex items-start gap-3 rounded-xl border p-3.5 transition-colors',
-                isActive && 'border-emerald-600 bg-emerald-50/60 shadow-xs',
-                isComplete && 'border-emerald-200 bg-white',
-                !isActive && !isComplete && 'border-slate-200 bg-white/70 opacity-75'
+                'flex items-start gap-3 rounded-xl border p-3 transition-all',
+                isActive && 'border-blue-500/50 bg-white shadow-sm ring-1 ring-blue-500/20',
+                isComplete && 'border-emerald-200 bg-white/90 shadow-2xs',
+                !isActive && !isComplete && 'border-slate-200/70 bg-white/60'
               )}
             >
               <div
                 className={cn(
-                  'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-sm font-bold',
-                  isComplete && 'bg-emerald-700 text-white',
-                  isActive && 'bg-emerald-600 text-white',
-                  !isActive && !isComplete && 'bg-slate-100 text-slate-600'
+                  'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-xs font-bold transition-colors',
+                  isComplete && 'bg-emerald-600 text-white',
+                  isActive && 'bg-[#1965e0] text-white',
+                  !isActive && !isComplete && 'bg-slate-100 text-slate-500 border border-slate-200/60'
                 )}
               >
                 {isComplete ? (
@@ -71,13 +71,29 @@ export function StepIndicator({ currentStep, hasDownloaded }: StepIndicatorProps
                 )}
               </div>
               <div className="min-w-0">
-                <p className="text-[11px] font-bold tracking-wider text-emerald-700 uppercase">
-                  {t('steps.stepPrefix', { number: step.num })}
-                </p>
-                <p className="text-sm font-semibold text-slate-900">
+                <div className="flex items-center gap-1.5">
+                  <span
+                    className={cn(
+                      'text-[10px] font-bold tracking-wider uppercase',
+                      isComplete
+                        ? 'text-emerald-700'
+                        : isActive
+                        ? 'text-[#1965e0]'
+                        : 'text-slate-400'
+                    )}
+                  >
+                    {t('steps.stepPrefix', { number: step.num })}
+                  </span>
+                  {isComplete && (
+                    <span className="text-[10px] text-emerald-600 font-medium">· Done</span>
+                  )}
+                </div>
+                <p className="text-xs sm:text-sm font-semibold text-slate-900 truncate">
                   {step.title}
                 </p>
-                <p className="mt-0.5 text-xs text-slate-600">{step.desc}</p>
+                <p className="mt-0.5 text-[11px] leading-tight text-slate-500 truncate">
+                  {step.desc}
+                </p>
               </div>
             </li>
           );

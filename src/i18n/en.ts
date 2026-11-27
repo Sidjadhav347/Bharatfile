@@ -11,6 +11,11 @@ export const enTranslations = {
     english: 'English',
     hindi: 'हिन्दी',
   },
+  intro: {
+    heading: 'Protect your file before sharing.',
+    subheading:
+      'Find and hide private information in your documents.',
+  },
   steps: {
     step1Title: 'Upload or Paste',
     step1Desc: 'Add a TXT/CSV file, paste text, or load the sample.',

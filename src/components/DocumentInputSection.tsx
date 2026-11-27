@@ -103,52 +103,64 @@ export function DocumentInputSection({
   };
 
   return (
-    <Card>
+    <Card className="overflow-hidden border-slate-200/80 bg-white shadow-[0_4px_24px_-4px_rgba(15,23,42,0.06)]">
+      {/* Sentra-style Window Header Bar with macOS dots & local status */}
+      <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/60 px-4 py-2.5 sm:px-6">
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
+          </div>
+          <span className="ml-2 font-mono text-[11px] text-slate-400 hidden sm:inline">
+            local://document-sandbox
+          </span>
+        </div>
+
+        {/* Try Sample Document Button - Sleek Sentra pill style */}
+        <div className="flex items-center gap-2">
+          {loadedDoc?.source === 'sample' ? (
+            <button
+              type="button"
+              onClick={onResetSample}
+              className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-700 shadow-2xs hover:bg-slate-50 transition-colors cursor-pointer"
+            >
+              <RotateCcw className="h-3.5 w-3.5 text-[#1965e0]" aria-hidden="true" />
+              {t('upload.resetSample')}
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onLoadSample}
+              className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1 text-xs font-semibold text-[#1965e0] shadow-2xs hover:bg-blue-100 transition-colors cursor-pointer"
+            >
+              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+              {t('upload.trySample')}
+            </button>
+          )}
+        </div>
+      </div>
+
       <CardHeader className="border-b border-slate-100 pb-4">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <CardTitle>{t('upload.heading')}</CardTitle>
             <CardDescription className="mt-1">
               {t('upload.subheading')}
             </CardDescription>
           </div>
-
-          {/* Mandatory One-Click Sample Document Loader */}
-          <div className="flex flex-wrap items-center gap-2">
-            {loadedDoc?.source === 'sample' ? (
-              <Button
-                variant="accent"
-                size="lg"
-                onClick={onResetSample}
-                className="w-full sm:w-auto"
-              >
-                <RotateCcw className="h-4 w-4" aria-hidden="true" />
-                {t('upload.resetSample')}
-              </Button>
-            ) : (
-              <Button
-                variant="accent"
-                size="lg"
-                onClick={onLoadSample}
-                className="w-full sm:w-auto"
-              >
-                <Sparkles className="h-4 w-4" aria-hidden="true" />
-                {t('upload.trySample')}
-              </Button>
-            )}
-          </div>
+          <p className="text-xs font-medium text-slate-400">
+            {t('upload.trySampleHint')}
+          </p>
         </div>
-        <p className="mt-2 text-xs text-indigo-700 font-medium">
-          {t('upload.trySampleHint')}
-        </p>
       </CardHeader>
 
-      <CardContent className="pt-4 space-y-4">
+      <CardContent className="space-y-4 pt-4">
         {/* Selected Document Status Bar */}
         {loadedDoc && (
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50/60 p-3.5">
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-blue-100 bg-blue-50/40 p-3.5">
             <div className="flex items-center gap-3 min-w-0">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-700 text-white">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#1965e0] text-white shadow-2xs">
                 {loadedDoc.format === 'csv' ? (
                   <FileSpreadsheet className="h-5 w-5" aria-hidden="true" />
                 ) : (
@@ -157,17 +169,17 @@ export function DocumentInputSection({
               </div>
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-xs font-semibold uppercase tracking-wide text-emerald-800">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
                     {t('upload.selectedFile')}:
                   </span>
                   <span className="truncate text-sm font-bold text-slate-900">
                     {loadedDoc.filename}
                   </span>
-                  <Badge variant="emerald">
+                  <Badge variant="indigo">
                     {loadedDoc.format.toUpperCase()}
                   </Badge>
                 </div>
-                <p className="text-xs text-slate-600 mt-0.5">
+                <p className="mt-0.5 text-xs text-slate-500">
                   {t('upload.fileSize')}: {formatBytes(loadedDoc.sizeBytes)}
                   {' · '}
                   {loadedDoc.source === 'sample'
@@ -181,7 +193,7 @@ export function DocumentInputSection({
 
             <div className="flex flex-wrap items-center gap-2">
               <Button variant="outline" size="sm" onClick={triggerFilePicker}>
-                <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
+                <RefreshCw className="h-3.5 w-3.5 text-slate-600" aria-hidden="true" />
                 {t('upload.replaceDocument')}
               </Button>
               <Button
@@ -191,7 +203,7 @@ export function DocumentInputSection({
                   setPasteText('');
                   onRemoveDocument();
                 }}
-                className="text-rose-700 hover:bg-rose-50 hover:text-rose-800"
+                className="text-rose-600 hover:bg-rose-50 hover:text-rose-700"
               >
                 <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
                 {t('upload.removeDocument')}
@@ -202,7 +214,7 @@ export function DocumentInputSection({
 
         {/* Input Mode Tabs */}
         <div
-          className="inline-flex rounded-lg border border-slate-200 bg-slate-100 p-1"
+          className="inline-flex rounded-xl border border-slate-200 bg-slate-100/70 p-1"
           role="tablist"
         >
           <button
@@ -211,13 +223,13 @@ export function DocumentInputSection({
             aria-selected={activeTab === 'file'}
             onClick={() => setActiveTab('file')}
             className={cn(
-              'inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition-colors cursor-pointer',
+              'inline-flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer',
               activeTab === 'file'
-                ? 'bg-white text-slate-900 shadow-xs'
+                ? 'bg-white text-slate-900 shadow-2xs'
                 : 'text-slate-600 hover:text-slate-900'
             )}
           >
-            <Upload className="h-4 w-4" aria-hidden="true" />
+            <Upload className="h-3.5 w-3.5" aria-hidden="true" />
             {t('upload.fileTab')}
           </button>
           <button
@@ -226,18 +238,18 @@ export function DocumentInputSection({
             aria-selected={activeTab === 'paste'}
             onClick={() => setActiveTab('paste')}
             className={cn(
-              'inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition-colors cursor-pointer',
+              'inline-flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer',
               activeTab === 'paste'
-                ? 'bg-white text-slate-900 shadow-xs'
+                ? 'bg-white text-slate-900 shadow-2xs'
                 : 'text-slate-600 hover:text-slate-900'
             )}
           >
-            <ClipboardPaste className="h-4 w-4" aria-hidden="true" />
+            <ClipboardPaste className="h-3.5 w-3.5" aria-hidden="true" />
             {t('upload.pasteTab')}
           </button>
         </div>
 
-        {/* Hidden native file input (always mounted so Replace Document works from anywhere) */}
+        {/* Hidden native file input */}
         <input
           ref={fileInputRef}
           type="file"
@@ -269,24 +281,25 @@ export function DocumentInputSection({
               }
             }}
             className={cn(
-              'flex flex-col items-center justify-center rounded-xl border-2 border-dashed px-6 py-8 text-center transition-colors cursor-pointer',
+              'group flex flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-9 text-center transition-all cursor-pointer',
               isDragging
-                ? 'border-emerald-600 bg-emerald-50'
-                : 'border-slate-300 bg-slate-50/60 hover:border-emerald-500 hover:bg-emerald-50/30'
+                ? 'border-[#1965e0] bg-blue-50/50 scale-[0.99]'
+                : 'border-slate-200 bg-slate-50/50 hover:border-[#1965e0]/60 hover:bg-blue-50/20'
             )}
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
-              <Upload className="h-6 w-6" aria-hidden="true" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[#1965e0] shadow-2xs border border-slate-200/80 group-hover:scale-105 transition-transform">
+              <Upload className="h-5 w-5" aria-hidden="true" />
             </div>
-            <p className="mt-3 text-base font-semibold text-slate-900">
+            <p className="mt-3 text-sm font-semibold text-slate-900">
               {t('upload.dropzoneTitle')}
             </p>
-            <p className="mt-1 text-sm text-slate-600">
+            <p className="mt-1 text-xs text-slate-500">
               {t('upload.dropzoneSubtitle')}
             </p>
             <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
               <Button
                 variant="default"
+                size="sm"
                 onClick={(e) => {
                   e.stopPropagation();
                   triggerFilePicker();
@@ -294,7 +307,7 @@ export function DocumentInputSection({
               >
                 {t('upload.chooseFile')}
               </Button>
-              <span className="text-xs font-medium text-slate-500">
+              <span className="text-xs text-slate-400">
                 {t('upload.supportedFormats')}
               </span>
             </div>
@@ -304,7 +317,7 @@ export function DocumentInputSection({
             <div className="flex flex-wrap items-center justify-between gap-2">
               <label
                 htmlFor="paste-document-input"
-                className="text-sm font-semibold text-slate-800"
+                className="text-xs font-semibold uppercase tracking-wider text-slate-500"
               >
                 {t('upload.pasteLabel')}
               </label>
@@ -314,7 +327,7 @@ export function DocumentInputSection({
                   size="sm"
                   onClick={handleClipboardPaste}
                 >
-                  <ClipboardPaste className="h-3.5 w-3.5" aria-hidden="true" />
+                  <ClipboardPaste className="h-3.5 w-3.5 text-slate-600" aria-hidden="true" />
                   {t('upload.pasteButton')}
                 </Button>
                 {pasteText && (
@@ -335,11 +348,11 @@ export function DocumentInputSection({
               value={pasteText}
               onChange={(e) => setPasteText(e.target.value)}
               placeholder={t('upload.pastePlaceholder')}
-              className="w-full rounded-xl border border-slate-300 bg-white p-3.5 font-mono text-sm text-slate-900 shadow-xs placeholder:text-slate-400 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
+              className="w-full rounded-xl border border-slate-200 bg-white p-3.5 font-mono text-xs text-slate-900 shadow-2xs placeholder:text-slate-400 focus:border-[#1965e0] focus:outline-none focus:ring-2 focus:ring-[#1965e0]/20 leading-relaxed"
             />
 
             <div className="flex justify-end">
-              <Button size="lg" onClick={handlePasteSubmit}>
+              <Button size="default" onClick={handlePasteSubmit}>
                 {t('upload.scanPastedText')}
               </Button>
             </div>
@@ -350,7 +363,7 @@ export function DocumentInputSection({
         {errorMsg && (
           <div
             role="alert"
-            className="flex items-start gap-2.5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-900"
+            className="flex items-start gap-2.5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs text-rose-900"
           >
             <AlertCircle
               className="mt-0.5 h-4 w-4 shrink-0 text-rose-600"

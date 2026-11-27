@@ -61,10 +61,10 @@ function renderHighlightedSegments(
         key={`mark-${idx}-${span.start}`}
         title={span.label}
         className={cn(
-          'rounded px-1 py-0.5 font-semibold',
+          'rounded-md px-1.5 py-0.5 font-semibold transition-colors',
           variant === 'original'
-            ? 'bg-rose-100 text-rose-900 ring-1 ring-rose-300'
-            : 'bg-emerald-100 text-emerald-950 ring-1 ring-emerald-300'
+            ? 'bg-rose-100/90 text-rose-900 ring-1 ring-rose-200'
+            : 'bg-emerald-100/90 text-emerald-950 ring-1 ring-emerald-200'
         )}
       >
         {segment}
@@ -129,10 +129,10 @@ export function ComparisonWorkspace({
 
   if (isScanning) {
     return (
-      <Card>
-        <CardContent className="flex flex-col items-center justify-center py-14 text-center">
+      <Card className="border-slate-200/80 bg-white">
+        <CardContent className="flex flex-col items-center justify-center py-16 text-center">
           <Loader2
-            className="h-8 w-8 animate-spin text-emerald-700"
+            className="h-8 w-8 animate-spin text-[#1965e0]"
             aria-hidden="true"
           />
           <p className="mt-3 text-sm font-semibold text-slate-800">
@@ -145,15 +145,15 @@ export function ComparisonWorkspace({
 
   if (!analysis) {
     return (
-      <Card>
-        <CardContent className="flex flex-col items-center justify-center py-14 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+      <Card className="border-slate-200/80 bg-white">
+        <CardContent className="flex flex-col items-center justify-center py-16 text-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-50 text-slate-400 border border-slate-200/80 shadow-2xs">
             <GitCompare className="h-6 w-6" aria-hidden="true" />
           </div>
-          <h3 className="mt-3 text-base font-semibold text-slate-900">
+          <h3 className="mt-3 text-sm font-semibold text-slate-900">
             {t('comparison.emptyTitle')}
           </h3>
-          <p className="mt-1 max-w-lg text-sm text-slate-600">
+          <p className="mt-1 max-w-md text-xs text-slate-500">
             {t('comparison.emptyDesc')}
           </p>
         </CardContent>
@@ -164,16 +164,18 @@ export function ComparisonWorkspace({
   const isCsv = analysis.format === 'csv' && analysis.csvRows;
 
   return (
-    <Card>
+    <Card className="overflow-hidden border-slate-200/80 bg-white shadow-[0_4px_24px_-4px_rgba(15,23,42,0.06)]">
       <CardHeader className="border-b border-slate-100 pb-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-3">
             <CardTitle>{t('comparison.heading')}</CardTitle>
             <div className="flex items-center gap-2 text-xs">
-              <span className="inline-flex items-center gap-1.5 rounded bg-rose-100 px-2 py-0.5 font-medium text-rose-900 ring-1 ring-rose-300">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-2.5 py-0.5 text-xs font-medium text-rose-700 border border-rose-200/60">
+                <span className="h-1.5 w-1.5 rounded-full bg-rose-500" />
                 {t('comparison.legendOriginal')}
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded bg-emerald-100 px-2 py-0.5 font-medium text-emerald-950 ring-1 ring-emerald-300">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700 border border-emerald-200/60">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                 {t('comparison.legendSanitized')}
               </span>
             </div>
@@ -181,14 +183,14 @@ export function ComparisonWorkspace({
 
           <div className="flex flex-wrap items-center gap-2">
             {isCsv && (
-              <div className="inline-flex rounded-lg border border-slate-200 bg-slate-100 p-0.5">
+              <div className="inline-flex rounded-xl border border-slate-200 bg-slate-100/70 p-0.5">
                 <button
                   type="button"
                   onClick={() => setCsvViewMode('table')}
                   className={cn(
-                    'inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold cursor-pointer',
+                    'inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold cursor-pointer transition-all',
                     csvViewMode === 'table'
-                      ? 'bg-white text-slate-900 shadow-xs'
+                      ? 'bg-white text-slate-900 shadow-2xs'
                       : 'text-slate-600 hover:text-slate-900'
                   )}
                 >
@@ -199,9 +201,9 @@ export function ComparisonWorkspace({
                   type="button"
                   onClick={() => setCsvViewMode('raw')}
                   className={cn(
-                    'inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold cursor-pointer',
+                    'inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold cursor-pointer transition-all',
                     csvViewMode === 'raw'
-                      ? 'bg-white text-slate-900 shadow-xs'
+                      ? 'bg-white text-slate-900 shadow-2xs'
                       : 'text-slate-600 hover:text-slate-900'
                   )}
                 >
@@ -212,14 +214,14 @@ export function ComparisonWorkspace({
             )}
 
             {(!isCsv || csvViewMode === 'raw') && (
-              <div className="inline-flex rounded-lg border border-slate-200 bg-slate-100 p-0.5">
+              <div className="inline-flex rounded-xl border border-slate-200 bg-slate-100/70 p-0.5">
                 <button
                   type="button"
                   onClick={() => setViewMode('highlighted')}
                   className={cn(
-                    'rounded-md px-3 py-1.5 text-xs font-semibold cursor-pointer',
+                    'rounded-lg px-3 py-1.5 text-xs font-semibold cursor-pointer transition-all',
                     viewMode === 'highlighted'
-                      ? 'bg-white text-slate-900 shadow-xs'
+                      ? 'bg-white text-slate-900 shadow-2xs'
                       : 'text-slate-600 hover:text-slate-900'
                   )}
                 >
@@ -229,9 +231,9 @@ export function ComparisonWorkspace({
                   type="button"
                   onClick={() => setViewMode('diff')}
                   className={cn(
-                    'rounded-md px-3 py-1.5 text-xs font-semibold cursor-pointer',
+                    'rounded-lg px-3 py-1.5 text-xs font-semibold cursor-pointer transition-all',
                     viewMode === 'diff'
-                      ? 'bg-white text-slate-900 shadow-xs'
+                      ? 'bg-white text-slate-900 shadow-2xs'
                       : 'text-slate-600 hover:text-slate-900'
                   )}
                 >
@@ -243,15 +245,15 @@ export function ComparisonWorkspace({
         </div>
       </CardHeader>
 
-      <CardContent className="pt-4 space-y-4">
+      <CardContent className="space-y-4 pt-4">
         {/* CSV Parse Warning if malformed CSV encountered */}
         {analysis.csvParseWarnings && analysis.csvParseWarnings.length > 0 && (
           <div
             role="status"
-            className="flex items-start gap-2 rounded-xl border border-amber-200 bg-amber-50 px-3.5 py-2.5 text-xs text-amber-950"
+            className="flex items-start gap-2 rounded-xl border border-amber-200 bg-amber-50 px-3.5 py-2.5 text-xs text-amber-900"
           >
             <AlertTriangle
-              className="mt-0.5 h-4 w-4 shrink-0 text-amber-700"
+              className="mt-0.5 h-4 w-4 shrink-0 text-amber-600"
               aria-hidden="true"
             />
             <span>
@@ -266,9 +268,9 @@ export function ComparisonWorkspace({
         {isCsv && csvViewMode === 'table' && analysis.csvRows ? (
           <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
             {/* Left Table: Original CSV */}
-            <div className="overflow-hidden rounded-xl border border-slate-200">
-              <div className="flex items-center justify-between border-b border-slate-200 bg-slate-100 px-3.5 py-2">
-                <span className="text-xs font-bold uppercase tracking-wide text-slate-700">
+            <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xs">
+              <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/70 px-4 py-2.5">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-600">
                   {t('comparison.originalTitle')}
                 </span>
                 <Badge variant="rose">CSV</Badge>
@@ -281,10 +283,10 @@ export function ComparisonWorkspace({
                         key={`orig-row-${row.rowIndex}`}
                         className={cn(
                           'border-b border-slate-100',
-                          row.rowIndex === 0 && 'bg-slate-50 font-semibold'
+                          row.rowIndex === 0 && 'bg-slate-50/60 font-semibold text-slate-900'
                         )}
                       >
-                        <td className="w-12 border-r border-slate-100 px-2 py-2 text-slate-400 font-mono">
+                        <td className="w-12 border-r border-slate-100 px-3 py-2 font-mono text-slate-400">
                           {row.rowIndex + 1}
                         </td>
                         {row.cells.map((cell) => (
@@ -311,9 +313,9 @@ export function ComparisonWorkspace({
             </div>
 
             {/* Right Table: Sanitized CSV */}
-            <div className="overflow-hidden rounded-xl border border-emerald-200">
-              <div className="flex items-center justify-between border-b border-emerald-200 bg-emerald-50 px-3.5 py-2">
-                <span className="text-xs font-bold uppercase tracking-wide text-emerald-900">
+            <div className="overflow-hidden rounded-xl border border-emerald-200/80 bg-white shadow-2xs">
+              <div className="flex items-center justify-between border-b border-emerald-100 bg-emerald-50/50 px-4 py-2.5">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-900">
                   {t('comparison.sanitizedTitle')}
                 </span>
                 <Badge variant="emerald">CSV</Badge>
@@ -326,10 +328,10 @@ export function ComparisonWorkspace({
                         key={`san-row-${row.rowIndex}`}
                         className={cn(
                           'border-b border-slate-100',
-                          row.rowIndex === 0 && 'bg-slate-50 font-semibold'
+                          row.rowIndex === 0 && 'bg-slate-50/60 font-semibold text-slate-900'
                         )}
                       >
-                        <td className="w-12 border-r border-slate-100 px-2 py-2 text-slate-400 font-mono">
+                        <td className="w-12 border-r border-slate-100 px-3 py-2 font-mono text-slate-400">
                           {row.rowIndex + 1}
                         </td>
                         {row.cells.map((cell) => (
@@ -352,19 +354,19 @@ export function ComparisonWorkspace({
             </div>
           </div>
         ) : viewMode === 'diff' ? (
-          /* Line Diff View powered by diff library */
-          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
-            <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2 text-xs">
+          /* Line Diff View */
+          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xs">
+            <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/60 px-4 py-2.5 text-xs">
               <span className="font-semibold text-slate-700">
                 {t('comparison.viewDiff')}
               </span>
               <div className="flex items-center gap-3">
-                <span className="inline-flex items-center gap-1 text-rose-800">
-                  <span className="h-2.5 w-2.5 rounded-xs bg-rose-200" />
+                <span className="inline-flex items-center gap-1 text-rose-700">
+                  <span className="h-2 w-2 rounded-full bg-rose-500" />
                   {t('comparison.legendRemoved')}
                 </span>
-                <span className="inline-flex items-center gap-1 text-emerald-800">
-                  <span className="h-2.5 w-2.5 rounded-xs bg-emerald-200" />
+                <span className="inline-flex items-center gap-1 text-emerald-700">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
                   {t('comparison.legendAdded')}
                 </span>
               </div>
@@ -372,9 +374,9 @@ export function ComparisonWorkspace({
             <div className="max-h-[460px] overflow-auto p-3 font-mono text-xs leading-relaxed">
               {lineDiffParts.map((part, idx) => {
                 const bg = part.added
-                  ? 'bg-emerald-50 text-emerald-950 border-l-4 border-emerald-500'
+                  ? 'bg-emerald-50 text-emerald-950 border-l-2 border-emerald-500'
                   : part.removed
-                  ? 'bg-rose-50 text-rose-950 border-l-4 border-rose-500'
+                  ? 'bg-rose-50 text-rose-950 border-l-2 border-rose-500'
                   : 'text-slate-700';
                 const prefix = part.added ? '+ ' : part.removed ? '- ' : '  ';
                 const lines = part.value.replace(/\n$/, '').split('\n');
@@ -383,7 +385,7 @@ export function ComparisonWorkspace({
                   <div key={`diff-${idx}`} className={cn('px-2 py-0.5', bg)}>
                     {lines.map((line, lineIdx) => (
                       <div key={`diff-${idx}-${lineIdx}`} className="whitespace-pre-wrap break-words">
-                        <span className="select-none opacity-60">{prefix}</span>
+                        <span className="select-none opacity-50">{prefix}</span>
                         {line}
                       </div>
                     ))}
@@ -393,19 +395,19 @@ export function ComparisonWorkspace({
             </div>
           </div>
         ) : (
-          /* Highlighted Side-by-Side Comparison Panels (TXT & Raw CSV) */
+          /* Highlighted Side-by-Side Comparison Panels */
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             {/* Left Panel: Original */}
-            <div className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white">
-              <div className="flex items-center justify-between border-b border-slate-200 bg-slate-100 px-4 py-2.5">
-                <span className="text-xs font-bold uppercase tracking-wide text-slate-800">
+            <div className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xs">
+              <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/60 px-4 py-2.5">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-600">
                   {t('comparison.originalTitle')}
                 </span>
                 <Badge variant="rose">
                   {analysis.totalSelectedForRedaction}
                 </Badge>
               </div>
-              <pre className="max-h-[460px] flex-1 overflow-auto p-4 font-mono text-xs leading-6 text-slate-800 whitespace-pre-wrap break-words">
+              <pre className="max-h-[460px] flex-1 overflow-auto p-4 font-mono text-xs leading-relaxed text-slate-800 whitespace-pre-wrap break-words">
                 {renderHighlightedSegments(
                   analysis.originalText,
                   isCsv
@@ -417,16 +419,16 @@ export function ComparisonWorkspace({
             </div>
 
             {/* Right Panel: Sanitized */}
-            <div className="flex flex-col overflow-hidden rounded-xl border border-emerald-200 bg-white">
-              <div className="flex items-center justify-between border-b border-emerald-200 bg-emerald-50 px-4 py-2.5">
-                <span className="text-xs font-bold uppercase tracking-wide text-emerald-950">
+            <div className="flex flex-col overflow-hidden rounded-xl border border-blue-200/80 bg-white shadow-2xs">
+              <div className="flex items-center justify-between border-b border-blue-100 bg-blue-50/40 px-4 py-2.5">
+                <span className="text-xs font-bold uppercase tracking-wider text-blue-900">
                   {t('comparison.sanitizedTitle')}
                 </span>
                 <Badge variant="emerald">
                   {analysis.totalSelectedForRedaction}
                 </Badge>
               </div>
-              <pre className="max-h-[460px] flex-1 overflow-auto p-4 font-mono text-xs leading-6 text-slate-800 whitespace-pre-wrap break-words">
+              <pre className="max-h-[460px] flex-1 overflow-auto p-4 font-mono text-xs leading-relaxed text-slate-800 whitespace-pre-wrap break-words">
                 {renderHighlightedSegments(
                   analysis.sanitizedText,
                   isCsv ? [] : toReplacementSpans(analysis.replacements, t),
@@ -437,29 +439,29 @@ export function ComparisonWorkspace({
           </div>
         )}
 
-        {/* Honest Validation Disclaimers & Manual Review Reminder */}
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-          <div className="flex items-start gap-2.5 rounded-xl border border-slate-200 bg-slate-50 p-3.5 text-xs text-slate-700">
+        {/* Validation Disclaimers & Manual Review Reminder */}
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 pt-1">
+          <div className="flex items-start gap-2.5 rounded-xl border border-slate-200/80 bg-slate-50/70 p-3.5 text-xs text-slate-500">
             <Info
-              className="mt-0.5 h-4 w-4 shrink-0 text-slate-500"
+              className="mt-0.5 h-4 w-4 shrink-0 text-[#1965e0]"
               aria-hidden="true"
             />
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 leading-relaxed">
               <p>{t('comparison.luhnNote')}</p>
               <p>{t('comparison.aadhaarNote')}</p>
             </div>
           </div>
 
-          <div className="flex items-start gap-2.5 rounded-xl border border-amber-200 bg-amber-50/70 p-3.5 text-xs text-amber-950">
+          <div className="flex items-start gap-2.5 rounded-xl border border-blue-100 bg-blue-50/40 p-3.5 text-xs text-slate-700">
             <AlertTriangle
-              className="mt-0.5 h-4 w-4 shrink-0 text-amber-700"
+              className="mt-0.5 h-4 w-4 shrink-0 text-[#1965e0]"
               aria-hidden="true"
             />
             <div>
-              <p className="font-semibold">
+              <p className="font-semibold text-slate-900">
                 {t('comparison.reviewReminderTitle')}
               </p>
-              <p className="mt-1 leading-relaxed">
+              <p className="mt-1 leading-relaxed text-slate-500">
                 {t('comparison.reviewReminderBody')}
               </p>
             </div>

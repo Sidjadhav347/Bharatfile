@@ -89,12 +89,12 @@ export function DownloadSection({
   const formatUpper = (analysis?.format ?? 'txt').toUpperCase();
 
   return (
-    <Card className="border-emerald-200 bg-gradient-to-br from-white to-emerald-50/40">
-      <CardHeader className="pb-3">
+    <Card className="border-slate-200/80 bg-white shadow-[0_4px_24px_-4px_rgba(15,23,42,0.06)]">
+      <CardHeader className="border-b border-slate-100 pb-3">
         <CardTitle>{t('download.heading')}</CardTitle>
         <CardDescription>{t('download.subheading')}</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-3 pt-4">
         <div className="flex flex-wrap items-center gap-3">
           <Button
             size="lg"
@@ -115,12 +115,12 @@ export function DownloadSection({
           >
             {copied ? (
               <>
-                <Check className="h-4 w-4 text-emerald-700" aria-hidden="true" />
+                <Check className="h-4 w-4 text-emerald-600" aria-hidden="true" />
                 {t('download.copied')}
               </>
             ) : (
               <>
-                <Copy className="h-4 w-4" aria-hidden="true" />
+                <Copy className="h-4 w-4 text-slate-500" aria-hidden="true" />
                 {t('download.copyButton')}
               </>
             )}
@@ -128,16 +128,16 @@ export function DownloadSection({
         </div>
 
         {!analysis && (
-          <p className="text-xs text-slate-500">{t('download.disabledHint')}</p>
+          <p className="text-xs text-slate-400">{t('download.disabledHint')}</p>
         )}
 
         {lastDownloadedFile && analysis && (
           <div
             role="status"
-            className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3.5 py-2.5 text-sm font-medium text-emerald-900"
+            className="flex items-center gap-2 rounded-xl border border-emerald-200/80 bg-emerald-50/70 px-3.5 py-2.5 text-xs font-medium text-emerald-900"
           >
             <CheckCircle2
-              className="h-4 w-4 shrink-0 text-emerald-700"
+              className="h-4 w-4 shrink-0 text-emerald-600"
               aria-hidden="true"
             />
             <span>
